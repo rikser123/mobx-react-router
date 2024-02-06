@@ -1,0 +1,58 @@
+{
+    "name": "mobx-react-router",
+    "version": "1.0.0",
+    "description": "A react router base on mobx",
+    "main": "dist/index.js",
+    "types": "dist/types/index.d.ts",
+    "files": [
+      "dist/",
+      "src/",
+      "test/",
+      "LICENSE",
+      "README.md"
+    ],
+    "scripts": {
+      "lint": "eslint . --ext .ts,.tsx --ignore-path .gitignore",
+      "test": "jest",
+      "build": "del-cli dist && tsc",
+      "format": "prettier --print-width 80 --tab-width 4 --single-quote --write {src,tests}/**/*.{ts,tsx}",
+      "precommit": "lint-staged"
+    },
+    "repository": {
+      "type": "git",
+      "url": "git+https://github.com/rikser123/mobx-react-router"
+    },
+    "keywords": [
+      "rikser123",
+      "mobx",
+      "router",
+      "react"
+    ],
+    "author": "rikser123 <rikser123@yandex.ru>",
+    "license": "ISC",
+    "bugs": {
+      "url": "https://github.com/rikser123/mobx-react-router/issues"
+    },
+    "homepage": "https://github.com/rikser123/mobx-react-router#readme",
+    "dependencies": {
+     
+    },
+    "peerDependencies": {
+      "mobx": "^6.x",
+      "mobx-react": "^9.x",
+      "react": "^18.x",
+      "react-dom": "^18.x"
+    },
+    "devDependencies": {
+      "mobx": "^6.11.0",
+      "mobx-react": "^9.1.0",
+      "react": "^18.2.0",
+      "react-dom": "^18.2.0"
+    },
+    "lint-staged": {
+      "*.{ts, tsx}": [
+        "npm run format",
+        "git add"
+      ]
+    }
+  }
