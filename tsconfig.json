@@ -2,7 +2,7 @@
     "compilerOptions": {
       "target": "es5",
       "module": "commonjs",
-      "lib": [ "ES2015", "DOM"],
+      "lib": ["esnext", "dom", "dom.iterable", "scripthost", "es2019"],
       "jsx": "react",
       "declaration": true,
       "declarationMap": true,
@@ -12,7 +12,8 @@
       "strict": true,
       "esModuleInterop": true,
       "skipLibCheck": true,
-      "useDefineForClassFields": true
+      "useDefineForClassFields": true,
+      "downlevelIteration": true
     },
     "include": [
       "src/**/*.ts",

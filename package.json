@@ -1,5 +1,5 @@
 {
-  "name": "mobx-react-router",
+  "name": "mobx-react-router-simple",
   "version": "1.0.0",
   "description": "A react router base on mobx",
   "main": "dist/index.js",
@@ -15,7 +15,7 @@
     "prettier": "npx prettier --write \"**/*.{js,jsx,ts,tsx,json,html,vue}\"",
     "eslint": "npx eslint --fix . --ext .ts",
     "test": "jest",
-    "build": "del-cli dist && tsc",
+    "build": "rimraf dist && tsc",
     "prepare": "husky"
   },
   "repository": {
