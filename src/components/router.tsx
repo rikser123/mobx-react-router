@@ -7,12 +7,12 @@ import { routerStore } from "../routerStore";
 import { Route } from "./route";
 
 export interface RouterProps {
-  paths: ConfigRoute[];
+  routes: ConfigRoute[];
 }
 
-export const Router: FC<RouterProps> = observer(({ paths }) => {
+export const Router: FC<RouterProps> = observer(({ routes }) => {
   useEffect(() => {
-    routerStore.setInitialRoute(paths);
+    routerStore.setInitialRoute(routes);
 
     window.addEventListener("popstate", routerStore.setCurrentRoute);
 
