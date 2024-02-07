@@ -51,7 +51,7 @@ export class RouteStore {
     }
   };
 
-  parseParams = (pathname: string, pathTemplate: string) => {
+  private parseParams = (pathname: string, pathTemplate: string) => {
     const pathSegments = pathname.split("/").filter(Boolean);
     const templateSegments = pathTemplate.split("/").filter(Boolean);
 
