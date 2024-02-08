@@ -8,6 +8,10 @@
 import { routes } from "./mockData";
 import { routerStore } from "../routerStore";
 
+const beforeEnterCallback = jest.fn();
+
+routes[0].beforeEnter = beforeEnterCallback as any;
+
 test("routeStore initial", () => {
   // @ts-ignore
   delete window.location;
@@ -76,4 +80,19 @@ test("select default path if there is one in children", () => {
   routerStore.setCurrentRoute();
 
   expect(routerStore.getMeta().childDefaultRoute).toBeTruthy();
+});
+
+test("beforeEnter is invoked", () => {
+  // @ts-ignore
+  delete window.location;
+  window.location = new URL("https://localhost:8000/b") as any;
+
+  routerStore.setCurrentRoute();
+
+  // @ts-ignore
+  delete window.location;
+  window.location = new URL("https://localhost:8000/a") as any;
+
+  routerStore.setCurrentRoute();
+  expect(beforeEnterCallback).toHaveBeenCalled();
 });

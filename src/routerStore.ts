@@ -58,28 +58,11 @@ class RouterStore {
     }
   };
 
-  setCurrentRoute = () => {
-    const currentPath = findCurrentRoute(location.pathname, this.config);
-
-    if (!currentPath) {
-      this.setDefaultRoute();
-      return;
-    }
-
-    if (!this.currentRoute.configRoute) {
-      this.setNewCurrentRoute(currentPath);
-      return;
-    }
-
+  private updateExistedRoute = (currentPath: ConfigRoute) => {
     const newCurrentRoute = new RouteStore(
       `${location.origin}${location.pathname}${location.search}`,
       currentPath,
     );
-
-    if (currentPath.path !== this.currentRoute.configRoute.path) {
-      this.setNewCurrentRoute(currentPath);
-      return;
-    }
 
     const isParamsEqual = isEqual(
       newCurrentRoute.params,
@@ -97,6 +80,34 @@ class RouterStore {
       this.currentRoute.searchParams = newCurrentRoute.searchParams;
       this.currentRoute.search = newCurrentRoute.search;
     }
+  };
+
+  setCurrentRoute = async () => {
+    const currentPath = findCurrentRoute(location.pathname, this.config);
+
+    if (!currentPath) {
+      this.setDefaultRoute();
+      return;
+    }
+
+    if (currentPath.beforeEnter) {
+      await currentPath.beforeEnter?.(
+        currentPath,
+        this.currentRoute.configRoute ? this.currentRoute : undefined,
+      );
+    }
+
+    if (!this.currentRoute.configRoute) {
+      this.setNewCurrentRoute(currentPath);
+      return;
+    }
+
+    if (currentPath.path !== this.currentRoute.configRoute.path) {
+      this.setNewCurrentRoute(currentPath);
+      return;
+    }
+
+    this.updateExistedRoute(currentPath);
   };
 
   setInitialRoute = (paths: ConfigRoute[]) => {

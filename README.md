@@ -89,7 +89,7 @@ export interface NavigatePayload {
 interface ConfigRoute {
   path: string;
   meta?: Record<string, string>;
-  beforeEnter?: () => void;
+  beforeEnter?: (configRoute: ConfigRoute, previousRoute?: RouteStore) => Promise<void>;
   component: FC<RouteComponentProps>;
   children?: ConfigRoute[];
 }

@@ -1,4 +1,5 @@
 import { FC } from "react";
+import { RouteStore } from "./routeStore";
 
 export interface RouteComponentProps {
   route?: ConfigRoute;
@@ -7,7 +8,10 @@ export interface RouteComponentProps {
 export interface ConfigRoute {
   path: string;
   meta?: Record<string, unknown>;
-  beforeEnter?: () => void;
+  beforeEnter?: (
+    configRoute: ConfigRoute,
+    previousRoute?: RouteStore,
+  ) => Promise<void>;
   component: FC<RouteComponentProps>;
   children?: ConfigRoute[];
 }
