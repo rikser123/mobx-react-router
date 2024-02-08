@@ -4,6 +4,8 @@ import { RouteStore } from "./routeStore";
 import { ConfigRoute, FlatPaths, NavigatePayload } from "./types";
 import { findCurrentRoute, isEqual, createFlatPaths } from "./utils";
 
+const DEFAULT_ROUTE_TEMPLATE = "/*";
+
 class RouterStore {
   currentRoute: RouteStore = {} as RouteStore;
   config: ConfigRoute[] = [];
@@ -37,7 +39,20 @@ class RouterStore {
   };
 
   private setDefaultRoute = () => {
-    const defaultRoute = findCurrentRoute("*", this.config);
+    let defaultRoute: ConfigRoute | null | undefined = null;
+    const parentWithDefaultRoute = this.parentRoutes.findLast((route) =>
+      route.children?.find(
+        (childRoute) => childRoute.path === DEFAULT_ROUTE_TEMPLATE,
+      ),
+    );
+    if (parentWithDefaultRoute) {
+      defaultRoute = parentWithDefaultRoute.children?.find(
+        (route) => route.path === DEFAULT_ROUTE_TEMPLATE,
+      );
+    } else {
+      defaultRoute = findCurrentRoute(DEFAULT_ROUTE_TEMPLATE, this.config);
+    }
+
     if (defaultRoute) {
       this.currentRoute = new RouteStore(`${location.origin}/*`, defaultRoute);
     }
@@ -74,11 +89,11 @@ class RouterStore {
       this.currentRoute.params = newCurrentRoute.params;
       this.currentRoute.pathname = newCurrentRoute.pathname;
     }
-    const isSeachParamsEqual = isEqual(
+    const isSearchParamsEqual = isEqual(
       newCurrentRoute.searchParams,
       this.currentRoute.searchParams,
     );
-    if (!isSeachParamsEqual) {
+    if (!isSearchParamsEqual) {
       this.currentRoute.searchParams = newCurrentRoute.searchParams;
       this.currentRoute.search = newCurrentRoute.search;
     }

@@ -11,7 +11,6 @@ import { routerStore } from "../routerStore";
 test("routeStore initial", () => {
   // @ts-ignore
   delete window.location;
-
   window.location = new URL(
     "https://localhost:8000/c/id?query=query&anotherQuery=anotherQuery",
   ) as any;
@@ -24,14 +23,13 @@ test("routeStore initial", () => {
   expect(searchParams.query).toBe("query");
   expect(searchParams.anotherQuery).toBe("anotherQuery");
   expect(params.id).toBe("id");
-  expect(routerStore.flatPaths).toHaveLength(7);
+  expect(routerStore.flatPaths).toHaveLength(8);
   expect(routerStore.parentRoutes).toHaveLength(1);
 });
 
 test("change route", () => {
   // @ts-ignore
   delete window.location;
-
   window.location = new URL("https://localhost:8000/c/a/bb") as any;
 
   routerStore.setCurrentRoute();
@@ -47,7 +45,6 @@ test("change route", () => {
 test("change same route query", () => {
   // @ts-ignore
   delete window.location;
-
   window.location = new URL("https://localhost:8000/c/a/bb?query=query") as any;
 
   routerStore.setCurrentRoute();
@@ -58,9 +55,25 @@ test("change same route query", () => {
 test("select default path if current is undefined", () => {
   // @ts-ignore
   delete window.location;
-
   window.location = new URL("https://localhost:8000/c/a/bb/222/333") as any;
 
   routerStore.setCurrentRoute();
   expect(routerStore.currentRoute.pathname).toBe("/*");
+});
+
+test("select default path if there is one in children", () => {
+  // @ts-ignore
+  delete window.location;
+  window.location = new URL("https://localhost:8000/c/b") as any;
+
+  routerStore.setCurrentRoute();
+
+  // @ts-ignore
+  delete window.location;
+  window.location = new URL(
+    "https://localhost:8000/c/b/ddd/fff/fff/fff",
+  ) as any;
+  routerStore.setCurrentRoute();
+
+  expect(routerStore.getMeta().childDefaultRoute).toBeTruthy();
 });

@@ -29,6 +29,11 @@ export const routes: ConfigRoute[] = [
           },
         ],
       },
+      {
+        path: "/*",
+        meta: { childDefaultRoute: true },
+        component: () => <div>b</div>,
+      },
     ],
   },
   {

@@ -6,7 +6,7 @@ export interface RouteComponentProps {
 
 export interface ConfigRoute {
   path: string;
-  meta?: Record<string, string>;
+  meta?: Record<string, unknown>;
   beforeEnter?: () => void;
   component: FC<RouteComponentProps>;
   children?: ConfigRoute[];

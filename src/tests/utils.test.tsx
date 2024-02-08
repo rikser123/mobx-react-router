@@ -37,9 +37,9 @@ test("comparePaths", () => {
 
 test("createFlatPaths", () => {
   const flatPaths = createFlatPaths(routes);
-  expect(flatPaths).toHaveLength(7);
-  expect(flatPaths.at(-2)).toHaveLength(3);
-  expect(flatPaths.at(-2)?.at(-1)?.path).toBe("/c/:a/bb");
+  expect(flatPaths).toHaveLength(8);
+  expect(flatPaths.at(-3)).toHaveLength(3);
+  expect(flatPaths.at(-3)?.at(-1)?.path).toBe("/c/:a/bb");
 });
 
 describe("isEqual", () => {
