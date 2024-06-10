@@ -103,6 +103,8 @@ class RouterStore {
     }
 
     if (currentPath.path !== this.currentRoute.configRoute.path) {
+      const popStateEvent = new CustomEvent("popstate");
+      window.dispatchEvent(popStateEvent);
       this.setNewCurrentRoute(currentPath);
       return;
     }
